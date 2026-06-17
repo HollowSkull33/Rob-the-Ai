@@ -1,0 +1,19 @@
+from datetime import datetime
+
+while True:
+    command = input("> ").lower()
+
+    if "hello" in command:
+        print(f"Hello, Rob.")
+
+    elif "time" in command:
+        current_time = datetime.now().strftime("%I:%M %p")
+        print("Current time:", current_time)
+
+    elif "date" in command or "day" in command:
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        print("Current date:", current_date)
+
+    elif command == "exit":
+        print("Goodbye.")
+        break
