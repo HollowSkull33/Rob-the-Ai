@@ -1,0 +1,67 @@
+from datetime import datetime
+from ollama import chat
+
+ASSISTANT_NAME = "Titan"
+
+print(f"{ASSISTANT_NAME} Online")
+
+conversation = [
+    {
+        "role": "system",
+        "content": (
+            f"You are {ASSISTANT_NAME}, a helpful engineering and rocketry assistant. "
+            "Be friendly, accurate, and concise unless the user asks for detail."
+        )
+    }
+]
+
+while True:
+    command = input("> ").strip()
+
+    if not command:
+        continue
+
+    command_lower = command.lower()
+
+    if "hello" in command_lower:
+        print(f"{ASSISTANT_NAME}: Hello, Rob.")
+
+    elif "time" in command_lower:
+        current_time = datetime.now().strftime("%I:%M %p")
+        print(f"{ASSISTANT_NAME}: Current time: {current_time}")
+
+    elif "date" in command_lower or "day" in command_lower:
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        print(f"{ASSISTANT_NAME}: Current date: {current_date}")
+
+    elif command_lower == "exit":
+        print(f"{ASSISTANT_NAME}: Goodbye.")
+        break
+
+    else:
+        try:
+            conversation.append(
+                {
+                    "role": "user",
+                    "content": command
+                }
+            )
+
+            response = chat(
+                model="llama3.2",
+                messages=conversation
+            )
+
+            ai_response = response.message.content
+
+            conversation.append(
+                {
+                    "role": "assistant",
+                    "content": ai_response
+                }
+            )
+
+            print(f"{ASSISTANT_NAME}: {ai_response}")
+
+        except Exception as e:
+            print(f"{ASSISTANT_NAME}: Error - {e}")
