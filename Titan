@@ -1,0 +1,9 @@
+Changed from having all code in main.py to:
+Titan/
+├── ai/
+├── commands/
+├── memory/
+├── data/
+├── tools/
+└── main.py
+Also have renamed the AI to Titan
